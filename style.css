@@ -21,9 +21,33 @@
   }
   
   .hero {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     text-align: center;
-    background: #fafafa;
+    background: linear-gradient(135deg, #e0f7fa, #f1f8e9);
+    color: #111;
+    padding: 4rem 2rem;
+    min-height: 100vh;
   }
+  
+  .hero-content {
+    max-width: 800px;
+  }
+  
+  .headline {
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    letter-spacing: -1px;
+  }
+  
+  .subhead {
+    font-size: 2rem;
+    font-weight: 400;
+    color: #555;
+  }
+  
   
   .about, .contact {
     max-width: 800px;
