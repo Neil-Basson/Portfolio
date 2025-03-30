@@ -6,14 +6,160 @@
   <title>Neil Basson – ML Engineer</title>
   <link rel="stylesheet" href="style.css" />
   <script src="script.js" defer></script>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    .hero {
+      position: relative;
+      height: 100vh;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: #111;
+      background: #f9f9f9;
+    }
+
+    .hero-content {
+      z-index: 2;
+      text-align: center;
+      opacity: 0;
+      animation: fadeIn 2s ease-in forwards;
+    }
+
+    .headline {
+      font-size: 3.5rem;
+      font-weight: 700;
+      margin: 0;
+      letter-spacing: -1px;
+    }
+
+    .subhead {
+      font-size: 2rem;
+      font-weight: 400;
+      color: #555;
+      margin-top: 1rem;
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
+    }
+
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
+    }
+  </style>
 </head>
 <body>
-  <section id="hero" class="section hero">
+  <section class="hero">
+    <canvas id="bg"></canvas>
     <div class="hero-content">
       <h1 class="headline">Machine Learning Engineer</h1>
       <h2 class="subhead">Neil Basson</h2>
     </div>
-  </section>  
+  </section>
+</body>
+
+<script>
+  // ML-style particle effect with mouse interaction
+  const canvas = document.getElementById("bg");
+  const ctx = canvas.getContext("2d");
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  let particles = [];
+  const count = 80;
+  let mouse = { x: null, y: null };
+
+  for (let i = 0; i < count; i++) {
+    particles.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      vx: (Math.random() - 0.5) * 0.5,
+      vy: (Math.random() - 0.5) * 0.5,
+    });
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    particles.forEach((p, idx) => {
+      p.x += p.vx;
+      p.y += p.vy;
+
+      if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+      if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, 2, 0, Math.PI * 2);
+      ctx.fillStyle = "#ccc";
+      ctx.fill();
+
+      for (let j = idx + 1; j < particles.length; j++) {
+        const p2 = particles[j];
+        const dx = p.x - p2.x;
+        const dy = p.y - p2.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+
+        if (dist < 100) {
+          ctx.beginPath();
+          ctx.moveTo(p.x, p.y);
+          ctx.lineTo(p2.x, p2.y);
+          ctx.strokeStyle = "rgba(150,150,150,0.1)";
+          ctx.stroke();
+        }
+      }
+
+      // Connect to mouse
+      if (mouse.x && mouse.y) {
+        const dx = p.x - mouse.x;
+        const dy = p.y - mouse.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 120) {
+          ctx.beginPath();
+          ctx.moveTo(p.x, p.y);
+          ctx.lineTo(mouse.x, mouse.y);
+          ctx.strokeStyle = "rgba(100,150,255,0.2)";
+          ctx.stroke();
+        }
+      }
+    });
+
+    requestAnimationFrame(animate);
+  }
+
+  animate();
+
+  window.addEventListener("resize", () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  });
+
+  window.addEventListener("mousemove", e => {
+    mouse.x = e.clientX;
+    mouse.y = e.clientY;
+  });
+
+  window.addEventListener("mouseout", () => {
+    mouse.x = null;
+    mouse.y = null;
+  });
+</script>
+</html>
+
+
 
   <section class="section about">
     <h2>About Me</h2>
@@ -25,7 +171,7 @@
     <div class="horizontal-scroll">
       <div class="project-card">
         <img src="images/project1.png" alt="Project 1" />
-        <h3>Masters Dissertation</h3>
+        <h3>Masters Thesis</h3>
         <p>Used ML + vision + robotics to estimate object properties non-invasively.</p>
       </div>
       <div class="project-card">
