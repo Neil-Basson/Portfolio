@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('load', () => {
     console.log('Site loaded and interactive');
   });
   
