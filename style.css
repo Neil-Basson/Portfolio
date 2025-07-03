@@ -161,7 +161,7 @@
   }
   
   .about-card {
-  background: #f7f7f7;
+  /*background: #f7f7f7;*/
   padding: 2rem;
   border-radius: 12px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.03);
@@ -194,7 +194,7 @@
   
   
   .projects-carousel {
-    overflow-x: scroll;
+    overflow-x: hidden;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -209,16 +209,20 @@
   }
   
   .carousel-track {
+    overflow-x: scroll;
     display: flex;
     gap: 2rem;
     scroll-snap-type: x mandatory;
-    padding: 2rem 2rem 4rem;
-    overflow-x: auto;
+    padding: 2rem;
+    scrollbar-width: none;
+  }
+  .carousel-track::-webkit-scrollbar {
+    display: none;
   }
   
   .project-card {
     scroll-snap-align: center;
-    background: #fff;
+    /*background: #fff; */
     border-radius: 16px;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
     min-width: 300px;
@@ -257,6 +261,16 @@
     color: #555;
     text-align: center;
   }
+
+  #bg {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+  }
+  
   
     
   
